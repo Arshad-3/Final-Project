@@ -1,4 +1,5 @@
 easyocr
+ultralytics
 matplotlib
 opencv-python
 numpy
