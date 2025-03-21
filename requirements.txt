@@ -1,0 +1,5 @@
+easyocr
+matplotlib
+opencv-python
+numpy
+pillow==9.5.0
