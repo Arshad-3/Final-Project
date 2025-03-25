@@ -1,11 +1,12 @@
 import cv2
+import google.generativeai as genai
 import easyocr
 import matplotlib.pyplot as plt
 import numpy as np
 import pyttsx3
 
 cap = cv2.VideoCapture(0)
-
+genai.configure(api_key="AIzaSyBpkteNGTau02yx-Nfu9WkLy-P0JNXwpDU")
 # instance text detector
 reader = easyocr.Reader(['en'], gpu=False)
 
@@ -22,9 +23,10 @@ text_ = reader.readtext(processed)
 # daw bbox and text
 text_list = []
 for t_, t in enumerate(text_):
-    print(t)
+    
     bbox, text, score = t
     if score > threshold:
+        print(t)
         # Extract bounding box points
         (x_min, y_min) = bbox[0]  # Top-left corner
         (x_max, y_max) = bbox[2]  # Bottom-right corner
@@ -42,12 +44,18 @@ plt.imshow(processed)
 plt.axis("off")
 plt.show()
 
+prompt = f"Rewrite the following text into a grammatically correct and meaningful sentence.: {speech}"
+model = genai.GenerativeModel("gemini-1.5-pro")  # Use Gemini Pro model
+response = model.generate_content(prompt)
+meaningful_sentence = response.text.strip()
+print("Corrected Sentence:", meaningful_sentence)
+
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)  # 0 = Male, 1 = Female
 engine.setProperty('rate', 125)
 
-engine.say(speech)
+engine.say(meaningful_sentence)
 
 # Play the speech
 engine.runAndWait()
