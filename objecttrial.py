@@ -4,7 +4,7 @@ import gc
 import time
 from ultralytics import YOLO
 
-model = YOLO('yolo11n.pt')
+model = YOLO('yolov8n.pt')
 cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
