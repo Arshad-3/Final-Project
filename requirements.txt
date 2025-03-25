@@ -1,6 +1,8 @@
-easyocr
-ultralytics
-matplotlib
 opencv-python
+google-generativeai
+easyocr
+matplotlib
 numpy
-pillow==9.5.0
+pyttsx3
+torch
+ultralytics
